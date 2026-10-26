@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="th"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>อักษรภาพจีน</title>
+<style>
+:root{--bg:#1a0509;--red:#b3122b;--dred:#6e0a1a;--gold:#f4c542;--paper:#fff3d6;--ink:#2b0a10;--ok:#2e9e55;--bad:#d7263d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a0509}}
+:root[data-theme="dark"]{--bg:#1a0509}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:radial-gradient(ellipse at 50% 0,#5a0f1e 0,var(--bg) 70%) fixed;color:var(--paper);font-family:"Sarabun","Noto Sans Thai","Tahoma",sans-serif;font-size:17px;overflow-x:hidden}
+.zh{font-family:"Noto Serif SC","Songti SC","STKaiti","KaiTi","SimSun",serif}
+#lan{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+#lan i{position:absolute;top:-60px;font-style:normal;font-size:30px;opacity:.35;animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(115vh) rotate(25deg)}}
+#app{position:relative;max-width:560px;margin:0 auto;padding:14px 14px 40px}
+h1{margin:6px 0;font-size:2.4rem;color:var(--gold);text-shadow:0 3px 0 var(--dred),0 0 24px #f4c54266;letter-spacing:2px;text-align:center}
+h2{color:var(--gold);text-align:center;margin:8px 0}
+.sub{text-align:center;opacity:.8;margin:0 0 14px}
+.logo{font-size:5.5rem;text-align:center;filter:drop-shadow(0 0 18px #ff3b3b);animation:fl 3s ease-in-out infinite}
+@keyframes fl{50%{transform:translateY(-8px)}}
+.card{background:linear-gradient(#fff3d6,#f1d9a2);color:var(--ink);border:4px solid var(--gold);border-radius:6px 22px 6px 22px;padding:16px;margin:12px 0;box-shadow:0 0 0 3px var(--dred),0 10px 24px #0008;text-align:center}
+.btn{display:block;width:100%;margin:10px 0;padding:14px;font:inherit;font-weight:700;font-size:1.15rem;color:#fff3d6;background:linear-gradient(var(--red),var(--dred));border:3px solid var(--gold);border-radius:4px 16px 4px 16px;cursor:pointer;box-shadow:0 4px 0 #3b0610;touch-action:manipulation}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #3b0610}
+.btn:disabled{opacity:.4}
+.btn.s{margin:0;padding:10px 4px;font-size:1rem}
+.row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.hud{display:flex;justify-content:space-between;gap:6px;background:#00000066;border:2px solid var(--gold);border-radius:12px;padding:8px 10px;font-weight:700;font-size:.95rem}
+.hud span{white-space:nowrap}
+.big{font-size:6rem;line-height:1.1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.opt{font:inherit;font-size:2.6rem;padding:10px 4px;background:#fff;color:var(--ink);border:3px solid var(--red);border-radius:12px;cursor:pointer;touch-action:manipulation;min-height:72px}
+.opt.t{font-size:1.1rem;font-weight:700}
+.opt.ok,.m.ok{background:#bdf0cc;border-color:var(--ok)}
+.opt.bad{background:#f7c0c6;border-color:var(--bad);animation:sh .3s}
+.opt.hl,.m.hl{outline:4px solid var(--gold);animation:sh .6s infinite}
+.opt.x{visibility:hidden}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.m{font:inherit;color:var(--ink);background:#fff;border:3px solid var(--red);border-radius:10px;padding:8px 4px;min-height:64px;width:100%;margin:5px 0;cursor:pointer;font-weight:700}
+.m.sel{background:var(--gold)}
+.m.done{visibility:hidden}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fb{min-height:1.6em;font-weight:700;margin-top:8px}
+.stars{font-size:3rem;letter-spacing:6px}
+table{width:100%;border-collapse:collapse;color:var(--ink)}
+td,th{padding:6px;border-bottom:1px solid #b3122b44}
+input[type=text]{width:100%;font:inherit;font-size:1.2rem;padding:12px;border:3px solid var(--red);border-radius:10px;text-align:center}
+.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:8px}
+.stat b{display:block;font-size:1.5rem;color:var(--red)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head><body>
+<div id="lan"></div><div id="app"></div>
+<script>
+/* ===== DATA: แก้ไขเนื้อหาได้ที่ Array นี้ (h=อักษร, p=พินอิน, t=ความหมายไทย, e=ภาพ) ===== */
+const C=[
+{h:'日',p:'rì',t:'ดวงอาทิตย์ / วัน',e:'☀️'},{h:'山',p:'shān',t:'ภูเขา',e:'⛰️'},
+{h:'水',p:'shuǐ',t:'น้ำ',e:'💧'},{h:'月',p:'yuè',t:'ดวงจันทร์ / เดือน',e:'🌙'},
+{h:'火',p:'huǒ',t:'ไฟ',e:'🔥'},{h:'木',p:'mù',t:'ต้นไม้ / ไม้',e:'🌳'},
+{h:'人',p:'rén',t:'คน',e:'🧑'},{h:'口',p:'kǒu',t:'ปาก',e:'👄'},
+{h:'田',p:'tián',t:'ทุ่งนา',e:'🌾'},{h:'雨',p:'yǔ',t:'ฝน',e:'🌧️'}];
+/* ด่าน 2: ลำดับวิวัฒนาการ ภาพวาด -> ลายเส้นโบราณ -> อักษรปัจจุบัน (ตัวอย่างลายเส้นแทนด้วยสัญลักษณ์) */
+const EV=[{h:'日',a:'⊙',e:'☀️',t:'ดวงอาทิตย์'},{h:'山',a:'▲▲▲',e:'⛰️',t:'ภูเขา'},{h:'水',a:'≋',e:'💧',t:'น้ำ'},{h:'月',a:'☽',e:'🌙',t:'ดวงจันทร์'}];
+const NAMES=['ทายภาพอักษรจีน','วิวัฒนาการอักษรจีน','จับคู่พิชิตอักษร','ศึกปรมาจารย์อักษรจีน'];
+const INFO=['ดูภาพ แล้วเลือกอักษรจีนที่ถูกต้อง 8 ข้อ ข้อละ 10 คะแนน (ใช้ใบ้ได้ แต่ได้ 5 คะแนน)',
+'แตะการ์ดเรียงจากภาพโบราณ → ลายเส้น → อักษรปัจจุบัน 4 รอบ รอบละ 10 คะแนน',
+'จับคู่ ภาพ+อักษร กับ พินอิน+ความหมาย ให้ครบ 5 คู่ คู่ละ 10 คะแนน',
+'ตอบให้ไวใน 60 วินาที! ถูกต่อเนื่องได้โบนัสคอมโบ ตอบผิดเสียคอมโบ'];
+/* ===== Utils ===== */
+const $=s=>document.querySelector(s),app=$('#app');
+const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const store=(k,v)=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}};
+let S={name:'',sc:[0,0,0,0],ok:0,tot:0,t0:0},timer=null;
+const cfg=Object.assign({mus:true,vol:.5},store('hz_cfg')||{});
+/* โคมไฟลอยพื้นหลัง */
+$('#lan').innerHTML=Array.from({length:9},(_,i)=>`<i style="left:${i*11+2}%;animation-duration:${14+i*2}s;animation-delay:-${i*3}s">${i%3?'🏮':'🐉'}</i>`).join('');
+/* ===== เสียง (สังเคราะห์ด้วย WebAudio ไม่ใช้ไฟล์ภายนอก) ===== */
+let ac,mt,mi=0;
+function A(){try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();ac.resume()}catch(e){}}
+function tone(f,d,ty,v){if(!ac)return;const o=ac.createOscillator(),g=ac.createGain();o.type=ty||'sine';o.frequency.value=f;g.gain.setValueAtTime(v*cfg.vol,ac.currentTime);g.gain.exponentialRampToValueAtTime(.0001,ac.currentTime+d);o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+d)}
+function sfx(ok){ok?(tone(660,.15,'triangle',.4),setTimeout(()=>tone(880,.25,'triangle',.4),110)):tone(150,.35,'sawtooth',.25)}
+const MEL=[392,440,523,440,392,330,294,330,392,523,588,523,440,392,330,294];
+function music(){clearInterval(mt);if(!cfg.mus||!ac)return;mt=setInterval(()=>{const f=MEL[mi++%MEL.length];tone(f,.5,'triangle',.12);if(mi%4==1)tone(f/4,1,'sine',.18)},320)}
+function save(){store('hz_cfg',cfg)}
+/* ===== View helpers ===== */
+const view=h=>{app.innerHTML=h;window.scrollTo(0,0)};
+const total=()=>S.sc.reduce((a,b)=>a+b,0);
+const hud=(l,x)=>`<div class="hud"><span>👤 ${esc(S.name)}</span><span>ด่าน ${l}</span><span>⭐ ${total()}</span><span>${x||''}</span></div>`;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function pts(l,n,ok){if(ok)S.sc[l]+=n,S.ok++;S.tot++;sfx(ok)}
+/* ===== หน้าจอหลัก ===== */
+function login(){view(`<div class="logo">🐉</div><h1 class="zh">汉字之战</h1><h1>อักษรภาพจีน</h1><p class="sub">ศึกนักรบแห่งแดนมหัศจรรย์</p>
+<div class="card"><p>ใส่ชื่อนักรบของเจ้า</p><input type="text" id="nm" maxlength="20" placeholder="ชื่อ-ชั้น/เลขที่" value="${esc(S.name||store('hz_name')||'')}"><button class="btn" id="go">⚔️ เข้าสู่สนามรบ</button></div>`);
+$('#go').onclick=()=>{const n=$('#nm').value.trim();if(!n){$('#nm').focus();return}S.name=n;store('hz_name',n);A();music();menu()}}
+function menu(){clearInterval(timer);view(`<div class="logo">🐉</div><h1>อักษรภาพจีน</h1><p class="sub zh">日 山 水 月 · นักรบ ${esc(S.name)}</p>
+<button class="btn" id="b1">⚔️ เริ่มเกม</button><button class="btn" id="b2">📜 ดูคะแนน</button><button class="btn" id="b3">⚙️ ตั้งค่า</button><button class="btn" id="b4">👤 เปลี่ยนผู้เล่น</button>`);
+$('#b1').onclick=()=>{S.sc=[0,0,0,0];S.ok=S.tot=0;S.t0=Date.now();intro(0)};$('#b2').onclick=board;$('#b3').onclick=settings;$('#b4').onclick=login}
+function settings(){view(`<h2>⚙️ ตั้งค่า</h2><div class="card"><button class="btn" id="mu">${cfg.mus?'🔊 ดนตรี: เปิด':'🔇 ดนตรี: ปิด'}</button><p>ระดับเสียง</p><input type="range" id="vo" min="0" max="1" step=".1" value="${cfg.vol}" style="width:100%"><button class="btn" id="cl">🗑️ ล้างคะแนนทั้งหมด</button></div><button class="btn" id="bk">← กลับ</button>`);
+$('#mu').onclick=()=>{cfg.mus=!cfg.mus;save();A();cfg.mus?music():clearInterval(mt);settings()};
+$('#vo').oninput=e=>{cfg.vol=+e.target.value;save()};$('#cl').onclick=()=>{if(confirm('ล้างคะแนนทั้งหมด?'))store('hz_scores',[])};$('#bk').onclick=menu}
+/* ===== Dashboard คะแนนรายบุคคล ===== */
+function board(){const all=store('hz_scores')||[],me=all.filter(x=>x.n===S.name),best=me.reduce((a,x)=>Math.max(a,x.s),0),avg=me.length?Math.round(me.reduce((a,x)=>a+x.s,0)/me.length):0,acc=me.length?Math.round(me.reduce((a,x)=>a+x.a,0)/me.length):0;
+const top=[...all].sort((a,b)=>b.s-a.s).slice(0,8);
+view(`<h2>📜 กระดานเกียรติยศ</h2><div class="card"><b>สถิติของ ${esc(S.name)}</b><div class="stat"><div><b>${me.length}</b>เล่นแล้ว</div><div><b>${best}</b>สูงสุด</div><div><b>${acc}%</b>แม่นยำ</div></div><small>คะแนนเฉลี่ย ${avg}</small></div>
+<div class="card"><table>${top.length?top.map((x,i)=>`<tr><td>${['🥇','🥈','🥉'][i]||i+1}</td><td>${esc(x.n)}</td><td>${x.s} แต้ม</td><td>${x.t}วิ</td></tr>`).join(''):'<tr><td>ยังไม่มีผลคะแนน เริ่มเล่นเลย!</td></tr>'}</table></div><button class="btn" id="bk">← กลับ</button>`);$('#bk').onclick=menu}
+/* ===== หน้าอธิบายก่อนเริ่มด่าน ===== */
+function intro(l){clearInterval(timer);view(`${hud(l+1)}<div class="card"><h2 style="color:var(--red)">ด่าน ${l+1}</h2><h2 style="color:var(--ink)">${NAMES[l]}</h2><p>${INFO[l]}</p></div><button class="btn" id="st">⚔️ เริ่มด่าน</button><button class="btn" id="bk">← กลับหน้าหลัก</button>`);
+$('#st').onclick=()=>[L1,L2,L3,L4][l]();$('#bk').onclick=menu}
+const next=l=>l<3?intro(l+1):summary();
+/* ===== ด่าน 1: ทายภาพ ===== */
+function L1(){const q=sh(C).slice(0,8);let i=0;
+function r(){const c=q[i],o=sh([c,...sh(C.filter(x=>x!==c)).slice(0,3)]);let hint=0,done=0;
+view(`${hud(1,'ข้อ '+(i+1)+'/8')}<div class="card"><div class="big">${c.e}</div><p>เลือกอักษรจีนที่ตรงกับภาพ</p><div class="grid">${o.map(x=>`<button class="opt zh" data-h="${x.h}">${x.h}</button>`).join('')}</div><div class="fb" id="fb"></div></div>
+<div class="row"><button class="btn s" id="bk">ย้อนกลับ</button><button class="btn s" id="hn">💡 ใบ้</button><button class="btn s" id="nx" disabled>ต่อไป</button></div>`);
+const bs=[...document.querySelectorAll('.opt')];
+bs.forEach(b=>b.onclick=()=>{if(done)return;done=1;const ok=b.dataset.h===c.h;pts(0,hint?5:10,ok);b.classList.add(ok?'ok':'bad');bs.forEach(x=>x.dataset.h===c.h&&x.classList.add('ok'));$('#fb').textContent=ok?'ถูกต้อง! '+c.h+' ('+c.p+') = '+c.t:'ผิด คำตอบคือ '+c.h+' ('+c.p+') = '+c.t;$('#nx').disabled=0;$('.hud span:nth-child(3)').textContent='⭐ '+total()});
+$('#hn').onclick=()=>{if(done||hint)return;hint=1;sh(bs.filter(x=>x.dataset.h!==c.h)).slice(0,2).forEach(x=>x.classList.add('x'))};
+$('#nx').onclick=()=>++i<8?r():next(0);$('#bk').onclick=()=>i>0?(i--,r()):menu()}
+r()}
+/* ===== ด่าน 2: วิวัฒนาการ ===== */
+function L2(){const q=sh(EV);let i=0;
+function r(){const e=q[i],st=[e.e,e.a,e.h];let n=0,hint=0;
+const cards=sh([0,1,2]);
+view(`${hud(2,'รอบ '+(i+1)+'/4')}<div class="card"><p>เรียงวิวัฒนาการของ <b>${e.t}</b><br>จากภาพโบราณ → อักษรปัจจุบัน</p><div class="grid" style="grid-template-columns:repeat(3,1fr)">${cards.map(k=>`<button class="opt zh" data-k="${k}" style="font-size:2.2rem">${st[k]}</button>`).join('')}</div><div class="fb" id="fb">แตะการ์ดใบแรกสุดก่อน</div></div>
+<div class="row"><button class="btn s" id="bk">ย้อนกลับ</button><button class="btn s" id="hn">💡 ใบ้</button><button class="btn s" id="nx" disabled>ต่อไป</button></div>`);
+const bs=[...document.querySelectorAll('.opt')];
+bs.forEach(b=>b.onclick=()=>{if(n>2)return;if(+b.dataset.k===n){b.classList.remove('hl');b.classList.add('ok');b.disabled=1;n++;tone(600+n*100,.15,'triangle',.4);if(n>2){pts(1,hint?5:10,1);$('#fb').textContent='เยี่ยม! เรียงถูกต้อง';$('#nx').disabled=0}}else{b.classList.add('bad');sfx(0);setTimeout(()=>b.classList.remove('bad'),400)}});
+$('#hn').onclick=()=>{if(n>2)return;hint=1;bs.forEach(b=>b.classList.toggle('hl',+b.dataset.k===n&&!b.disabled))};
+$('#nx').onclick=()=>++i<4?r():next(1);$('#bk').onclick=()=>i>0?(i--,r()):menu()}
+r()}
+/* ===== ด่าน 3: จับคู่ ===== */
+function L3(){const q=sh(C).slice(0,5),R=sh(q);let sel=null,left=5,hint=0;
+view(`${hud(3,'เหลือ '+left+' คู่')}<div class="card"><p>แตะซ้าย แล้วแตะขวาที่คู่กัน</p><div class="cols"><div>${q.map(c=>`<button class="m L" data-h="${c.h}"><span style="font-size:1.6rem">${c.e}</span> <span class="zh" style="font-size:1.8rem">${c.h}</span></button>`).join('')}</div><div>${R.map(c=>`<button class="m R" data-h="${c.h}">${c.p}<br><small>${c.t}</small></button>`).join('')}</div></div><div class="fb" id="fb"></div></div>
+<div class="row"><button class="btn s" id="bk">ย้อนกลับ</button><button class="btn s" id="hn">💡 ใบ้</button><button class="btn s" id="nx" disabled>ต่อไป</button></div>`);
+const $$=s=>[...document.querySelectorAll(s)];
+$$('.m').forEach(b=>b.onclick=()=>{$$('.hl').forEach(x=>x.classList.remove('hl'));
+if(b.classList.contains('L')){$$('.L').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');sel=b;return}
+if(!sel){$('#fb').textContent='เลือกฝั่งซ้ายก่อน';return}
+if(sel.dataset.h===b.dataset.h){pts(2,hint?5:10,1);hint=0;sel.classList.add('ok');b.classList.add('ok');const a=sel;setTimeout(()=>{a.classList.add('done');b.classList.add('done')},400);sel=null;left--;$('.hud span:nth-child(4)').textContent='เหลือ '+left+' คู่';$('.hud span:nth-child(3)').textContent='⭐ '+total();if(!left){$('#fb').textContent='ครบทุกคู่! 🎉';$('#nx').disabled=0}}
+else{S.tot++;sfx(0);b.classList.add('bad');setTimeout(()=>b.classList.remove('bad'),300)}});
+$('#hn').onclick=()=>{const l=$$('.L:not(.done)')[0];if(!l)return;hint=1;l.classList.add('hl');$$('.R').find(x=>x.dataset.h===l.dataset.h).classList.add('hl')};
+$('#nx').onclick=()=>next(2);$('#bk').onclick=menu}
+/* ===== ด่าน 4: จับเวลา ===== */
+function L4(){let tl=60,combo=0,qs=0;
+view(`${hud(4,'⏱️ <b id="tm">60</b>')}<div class="card" id="q"></div><div class="row"><button class="btn s" id="bk">ออก</button><span></span><span></span></div>`);
+$('#bk').onclick=menu;
+timer=setInterval(()=>{tl--;const t=$('#tm');if(t)t.textContent=tl;if(tl<=0){clearInterval(timer);next(3)}},1000);
+function q(){const c=sh(C)[0],ty=qs++%3,o=sh([c,...sh(C.filter(x=>x!==c)).slice(0,3)]);
+const P=[['อักษรนี้แปลว่า?','<span class="zh big">'+c.h+'</span>',x=>x.t,x=>x.t===c.t,''],['เลือกอักษรของ '+c.t,'<span style="font-size:2rem">'+c.p+'</span>',x=>x.h,x=>x===c,'zh'],['ภาพนี้อ่านว่า?','<span class="big">'+c.e+'</span>',x=>x.p,x=>x===c,'']][ty];
+$('#q').innerHTML=`<p>${P[0]}</p>${P[1]}<div class="grid">${o.map((x,i)=>`<button class="opt ${ty==1?'zh':'t'}" data-i="${i}">${P[2](x)}</button>`).join('')}</div><div class="fb">🔥 คอมโบ ${combo}</div>`;
+document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{if(tl<=0)return;const ok=P[3](o[+b.dataset.i]);if(ok){combo++;pts(3,10+Math.min(combo-1,5)*2,1)}else{combo=0;pts(3,0,0)}$('.hud span:nth-child(3)').textContent='⭐ '+total();q()})}
+q()}
+/* ===== สรุปผล ===== */
+function summary(){clearInterval(timer);const T=total(),st=T>=200?3:T>=120?2:T>=50?1:0,md=T>=200?'🥇 เหรียญทอง':T>=120?'🥈 เหรียญเงิน':T>=50?'🥉 เหรียญทองแดง':'🎖️ ผู้กล้า',acc=S.tot?Math.round(S.ok/S.tot*100):0,sec=Math.round((Date.now()-S.t0)/1000);
+const all=store('hz_scores')||[];all.push({n:S.name,s:T,a:acc,t:sec});store('hz_scores',all.slice(-200));sfx(1);
+view(`<h2>🏆 สรุปผลการรบ</h2><div class="card"><div class="stars">${'⭐'.repeat(st)}${'☆'.repeat(3-st)}</div><h2 style="color:var(--red)">${md}</h2><h1 style="color:var(--red);text-shadow:none">${T} แต้ม</h1><table>${NAMES.map((n,i)=>`<tr><td>ด่าน ${i+1}</td><td style="text-align:left">${n}</td><td>${S.sc[i]}</td></tr>`).join('')}</table><p>แม่นยำ ${acc}% · ใช้เวลา ${sec} วินาที</p></div><button class="btn" id="ag">🔁 เล่นอีกครั้ง</button><button class="btn" id="bd">📜 ดูคะแนน</button><button class="btn" id="hm">🏯 กลับหน้าหลัก</button>`);
+$('#ag').onclick=()=>{S.sc=[0,0,0,0];S.ok=S.tot=0;S.t0=Date.now();intro(0)};$('#bd').onclick=board;$('#hm').onclick=menu}
+login();
+</script></body></html>
